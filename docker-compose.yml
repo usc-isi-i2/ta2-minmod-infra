@@ -91,18 +91,9 @@ services:
     environment:
       - MINMOD_API=http://api:8000
     command: python -m minmod_editor --port 9000
-  # image name and port are placeholders -- update once Ryan's GeoChem HMI repo and
-  # its actual container details are settled (mms/build.py's REPOS list will also
-  # need a corresponding entry once that repo exists, to clone/build it like the
-  # other services above)
-  geochem:
-    image: minmod-geochem
-    ports:
-      - "127.0.0.1:8060:8060"
-    networks:
-      - minmod
-    environment:
-      - MINMOD_API=http://api:8000
+  # GeoChem HMI is hosted externally (https://proxy.usgs.geochem.jataware.ai/,
+  # run by Jataware/USGS) and reverse-proxied from nginx.conf's /geochem/ location --
+  # no local container, so no service/image entry here and no mms/build.py entry.
 
 networks:
   minmod:
