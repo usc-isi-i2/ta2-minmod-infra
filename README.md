@@ -106,3 +106,9 @@ After the services are started, you can access the services with your host IP ad
 ## Admin
 
 We provide [APIs](https://minmod.isi.edu/api/v1/docs#/admin) to list the users and create users (need admin access). We also provide commands to create/delete users from files (no need permission -- see [ta2-minmod-kg/minmodkg/api/**main**.py](https://github.com/DARPA-CRITICALMAAS/ta2-minmod-kg/blob/main/minmodkg/api/__main__.py)). One way to execute these commands is to attach to the `api` container (e.g., `docker compose exec -it api bash`) and run them there.
+
+For the full new-user onboarding process (starting from the account request form), see [docs/onboarding-new-user.md](./docs/onboarding-new-user.md).
+
+## Recovering from a Server Reboot
+
+`docker compose up` alone is not enough after a reboot — the Postgres and Fuseki data stores are started separately and won't come back automatically. See [docs/system-reboot-recovery.md](./docs/system-reboot-recovery.md) for the full ordered list of commands.
