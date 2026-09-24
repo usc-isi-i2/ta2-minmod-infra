@@ -91,6 +91,9 @@ services:
     environment:
       - MINMOD_API=http://api:8000
     command: python -m minmod_editor --port 9000
+  # GeoChem HMI is hosted externally (https://proxy.usgs.geochem.jataware.ai/,
+  # run by Jataware/USGS) and reverse-proxied from nginx.conf's /geochem/ location --
+  # no local container, so no service/image entry here and no mms/build.py entry.
 
 networks:
   minmod:
