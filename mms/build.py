@@ -75,7 +75,7 @@ def update_repo(repo_name: str) -> bool:
             )
         else:
             exec(
-                f"git clone --depth 1 https://github.com/DARPA-CRITICALMAAS/{repo_name}.git",
+                f"git clone --depth 1 --recurse-submodules https://github.com/DARPA-CRITICALMAAS/{repo_name}.git",
                 cwd=MAIN_DIR,
             )
         if repo_name == "ta2-minmod-data":
@@ -107,6 +107,8 @@ def update_repo(repo_name: str) -> bool:
         else:
             exec("git fetch --all", cwd=repo_dir)
             exec("git pull", cwd=repo_dir)
+            # a pull can move a submodule pin; this is what checks the new one out
+            exec("git submodule update --init --recursive", cwd=repo_dir)
 
         return True  # Repository updated
     except subprocess.CalledProcessError as e:
@@ -115,6 +117,7 @@ def update_repo(repo_name: str) -> bool:
         try:
             exec("git clean -fd", cwd=repo_dir)
             exec("git pull", cwd=repo_dir)
+            exec("git submodule update --init --recursive", cwd=repo_dir)
             return True
         except subprocess.CalledProcessError as retry_error:
             print(f"Error during retry 'git pull': {retry_error}")
