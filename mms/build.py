@@ -133,7 +133,8 @@ def read_env_vars(envfile_path: Path) -> list[str]:
             env_vars = [
                 line.replace("export ", "").split("=")[0].strip()
                 for line in file
-                if "=" in line
+                # a commented-out example is not a variable
+                if "=" in line and not line.strip().startswith("#")
             ]
     # else:
     #     raise MissingEnvTemplateFileError("No env template file present!")
